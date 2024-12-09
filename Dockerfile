@@ -1,14 +1,14 @@
-FROM python:3.9
+FROM python:3.9-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=on
+   WORKDIR /app
 
-WORKDIR /app
+   # Копируем файл с зависимостями
+   COPY requirements.txt .
 
-COPY requirements.txt /app/requirements.txt
+   # Устанавливаем зависимости
+   RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+   # Копируем остальные файлы
+   COPY . .
 
-COPY . /app
-
-CMD ["python", "тгпремселбот.py"]
+   CMD ["python", "тгпремселбот.py"]
